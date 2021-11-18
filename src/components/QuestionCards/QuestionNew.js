@@ -34,7 +34,7 @@ const QuestionNew = () => {
   };
 
   return (
-    <Container size="sm">
+    <Container maxWidth="sm">
       <Typography
         variant="h6"
         color="textSecondary"
