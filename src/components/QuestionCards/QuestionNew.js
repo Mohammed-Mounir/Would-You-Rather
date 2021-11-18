@@ -4,14 +4,17 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { handleAddQuestion } from "../../state/action-creator/questions";
 
 const QuestionNew = () => {
   const [optionOne, setOptionOne] = useState("");
   const [optionTwo, setOptionTwo] = useState("");
   const [optionOneError, setOptionOneError] = useState(false);
   const [optionTwoError, setOptionTwoError] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setOptionOneError(false);
     setOptionTwoError(false);
@@ -23,11 +26,8 @@ const QuestionNew = () => {
       setOptionTwoError(true);
     }
     if (optionOne && optionTwo) {
-      // fetch('http://localhost:8000/notes', {
-      //   method: 'POST',
-      //   headers: {"Content-type": "application/json"},
-      //   body: JSON.stringify({ title, details, category })
-      // }).then(() => history.push('/'))
+      const res = await dispatch(handleAddQuestion(optionOne, optionTwo));
+      console.log(res);
     }
   };
 
