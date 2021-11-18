@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { handleAddQuestion } from "../../state/action-creator/questions";
 
 const QuestionNew = () => {
@@ -13,6 +14,7 @@ const QuestionNew = () => {
   const [optionOneError, setOptionOneError] = useState(false);
   const [optionTwoError, setOptionTwoError] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,8 +28,8 @@ const QuestionNew = () => {
       setOptionTwoError(true);
     }
     if (optionOne && optionTwo) {
-      const res = await dispatch(handleAddQuestion(optionOne, optionTwo));
-      console.log(res);
+      await dispatch(handleAddQuestion(optionOne, optionTwo));
+      navigate("/");
     }
   };
 
