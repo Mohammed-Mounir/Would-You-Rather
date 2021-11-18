@@ -28,7 +28,7 @@ const UserScore = (props) => {
       />
       <CardContent>
         <CardText>{numOfAnswers} Answered Questions!</CardText>
-        <CardText>{numOfQuestions} Questions Asked!</CardText>
+        <CardText>{numOfQuestions} Created Questions!</CardText>
         <CardText sx={{ bgcolor: red[500] }}>
           {name.split(" ")[0]} Scored {score} Points!
         </CardText>
