@@ -10,6 +10,7 @@ const CardText = styled("p")(({ theme }) => ({
   backgroundColor: blue[400],
   textAlign: "center",
   padding: theme.spacing(1),
+  color: "white",
 }));
 
 const UserScore = (props) => {
