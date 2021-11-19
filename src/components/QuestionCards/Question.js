@@ -14,8 +14,10 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import { makeStyles } from "@mui/styles";
 import { red, blue } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { handleAddAnswer } from "../../state/action-creator/questions";
 
 const CardText = styled("p")(({ theme }) => ({
   ...theme.typography.button,
@@ -52,12 +54,17 @@ const useStyles = makeStyles((theme) => {
 const Question = () => {
   const { users, authedUser, questions } = useSelector((state) => state);
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const classes = useStyles();
+  const [selectedOption, setSelectedOption] = useState("optionOne");
   const currentUser = users[authedUser];
   const currentUserAnswered = currentUser?.answers;
   const question = questions && questions[id];
   const questionUserName = users[question?.author]?.name;
   const questionUserImage = users[question?.author]?.avatarURL;
+  const optionOneText = question?.optionOne.text;
+  const optionTwoText = question?.optionTwo.text;
   const optionOneVotes = question?.optionOne.votes.length;
   const optionTwoVotes = question?.optionTwo.votes.length;
   const totalVotes = optionOneVotes + optionTwoVotes;
@@ -77,7 +84,18 @@ const Question = () => {
   const isOptionTwo =
     currentUserAnswered && currentUserAnswered[answerFound] === "optionTwo";
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(selectedOption);
+    await dispatch(
+      handleAddAnswer({
+        authedUser,
+        qid: id,
+        answer: selectedOption,
+      })
+    );
+    navigate("/");
+  };
 
   return (
     <Container maxWidth="sm">
@@ -138,14 +156,22 @@ const Question = () => {
           </Typography>
 
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <FormControl>
+            <FormControl sx={{ display: "block", marginBottom: "20px" }}>
               {/* <FormLabel>Would you rather...</FormLabel> */}
               <RadioGroup
-              // value={answer}
-              // onChange={(e) => setAnswer(e.target.value)}
+                value={selectedOption}
+                onChange={(e) => setSelectedOption(e.target.value)}
               >
-                <FormControlLabel value="one" control={<Radio />} label="one" />
-                <FormControlLabel value="two" control={<Radio />} label="two" />
+                <FormControlLabel
+                  value="optionOne"
+                  control={<Radio />}
+                  label={optionOneText}
+                />
+                <FormControlLabel
+                  value="optionTwo"
+                  control={<Radio />}
+                  label={optionTwoText}
+                />
               </RadioGroup>
             </FormControl>
 
