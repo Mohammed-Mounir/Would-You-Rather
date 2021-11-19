@@ -6,18 +6,17 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { makeStyles } from "@mui/styles";
-import { red, blue } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { handleAddAnswer } from "../../state/action-creator/questions";
+import { handleAddUserAnswer } from "../../state/action-creator/users";
 
 const CardText = styled("p")(({ theme }) => ({
   ...theme.typography.button,
@@ -31,6 +30,7 @@ const useStyles = makeStyles((theme) => {
   return {
     ribbonParent: {
       position: "relative",
+      marginBottom: "1px",
     },
     ribbon: {
       backgroundColor: "red",
@@ -68,17 +68,9 @@ const Question = () => {
   const optionOneVotes = question?.optionOne.votes.length;
   const optionTwoVotes = question?.optionTwo.votes.length;
   const totalVotes = optionOneVotes + optionTwoVotes;
-  console.log(question && question);
-  console.log(currentUserAnswered && currentUserAnswered);
-  console.log(currentUserAnswered && Object.keys(currentUserAnswered));
-
   const answerFound =
     currentUserAnswered &&
     Object.keys(currentUserAnswered).find((answer) => answer === id);
-  console.log(
-    currentUserAnswered && question[currentUserAnswered[answerFound]]?.text
-  );
-
   const isOptionOne =
     currentUserAnswered && currentUserAnswered[answerFound] === "optionOne";
   const isOptionTwo =
@@ -86,15 +78,15 @@ const Question = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedOption);
     await dispatch(
-      handleAddAnswer({
+      handleAddUserAnswer({
         authedUser,
         qid: id,
         answer: selectedOption,
       })
     );
-    navigate("/");
+
+    navigate(`/question/${id}`);
   };
 
   return (
@@ -129,6 +121,12 @@ const Question = () => {
                   </Typography>
                 )}
               </CardText>
+              <Typography color="textSecondary">{`${(
+                (optionOneVotes / totalVotes) *
+                100
+              ).toFixed(
+                1
+              )}% - ${optionOneVotes} out of ${totalVotes} votes`}</Typography>
               <CardText sx={{ bgcolor: "white", color: "#808080" }}>
                 OR
               </CardText>
@@ -140,6 +138,12 @@ const Question = () => {
                   </Typography>
                 )}
               </CardText>
+              <Typography color="textSecondary">{`${(
+                (optionTwoVotes / totalVotes) *
+                100
+              ).toFixed(
+                1
+              )}% - ${optionTwoVotes} out of ${totalVotes} votes`}</Typography>
             </CardContent>
           </Card>
         </>
@@ -157,7 +161,6 @@ const Question = () => {
 
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <FormControl sx={{ display: "block", marginBottom: "20px" }}>
-              {/* <FormLabel>Would you rather...</FormLabel> */}
               <RadioGroup
                 value={selectedOption}
                 onChange={(e) => setSelectedOption(e.target.value)}

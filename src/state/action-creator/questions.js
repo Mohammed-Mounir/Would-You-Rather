@@ -1,15 +1,14 @@
-import { saveQuestion, saveQuestionAnswer } from "../../utils/api";
+import { saveQuestion } from "../../utils/api";
+import { addUserQuestion } from "./users";
 
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
 export const ADD_ANSWER = "ADD_ANSWER";
 
 const addQuestion = (question) => {
-  return (dispatch) => {
-    dispatch({
-      type: ADD_QUESTION,
-      question,
-    });
+  return {
+    type: ADD_QUESTION,
+    question,
   };
 };
 
@@ -22,6 +21,7 @@ export const handleAddQuestion = (optionOneText, optionTwoText) => {
       author: authedUser,
     }).then((question) => {
       dispatch(addQuestion(question));
+      dispatch(addUserQuestion(question));
     });
   };
 };
@@ -33,35 +33,11 @@ export const receiveQuestions = (questions) => {
   };
 };
 
-const addAnswer = ({ authedUser, qid, answer }) => {
-  return (dispatch) => {
-    dispatch({
-      type: ADD_ANSWER,
-      authedUser,
-      qid,
-      answer,
-    });
-  };
-};
-
-export const handleAddAnswer = (answeredQuestion) => {
-  return (dispatch) => {
-    // dispatch(addAnswer(answeredQuestion));
-
-    // return saveQuestionAnswer(answeredQuestion).catch((e) => {
-    //   console.warn("Error in handleAddAnswer: ", e);
-    //   dispatch(addAnswer(answeredQuestion));
-    //   alert("The was an error adding your answer. Try again.");
-    // });
-
-    return saveQuestionAnswer(answeredQuestion)
-      .then(() => {
-        dispatch(addAnswer(answeredQuestion));
-      })
-      .catch((e) => {
-        console.warn("Error in handleAddAnswer: ", e);
-        dispatch(addAnswer(answeredQuestion));
-        alert("The was an error adding your answer. Try again.");
-      });
+export const addAnswer = ({ authedUser, qid, answer }) => {
+  return {
+    type: ADD_ANSWER,
+    authedUser,
+    qid,
+    answer,
   };
 };
