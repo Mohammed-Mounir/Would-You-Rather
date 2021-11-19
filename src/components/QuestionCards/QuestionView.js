@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { red, blue } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const CardText = styled("p")(({ theme }) => ({
   ...theme.typography.button,
@@ -43,7 +44,12 @@ const QuestionView = (props) => {
         <CardText>{optionOne.text}?</CardText>
         <CardText sx={{ bgcolor: "white", color: "#808080" }}>OR</CardText>
         <CardText>{optionTwo.text}?</CardText>
-        <Button variant="outlined" sx={{ width: "100%", marginTop: "10px" }}>
+        <Button
+          component={Link}
+          to={`/question/${id}`}
+          sx={{ width: "100%", marginTop: "10px" }}
+          variant="outlined"
+        >
           View Question
         </Button>
       </CardContent>

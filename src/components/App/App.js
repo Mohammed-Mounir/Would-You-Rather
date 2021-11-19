@@ -6,7 +6,7 @@ import Layout from "../Layout/Layout";
 import Dashboard from "../Dashboard/Dashboard";
 import QuestionNew from "../QuestionCards/QuestionNew";
 import LeaderBoard from "../LeaderBoard/LeaderBoard";
-import Question from "../QuestionCards/Question/Question";
+import Question from "../QuestionCards/Question";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
