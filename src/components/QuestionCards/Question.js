@@ -14,7 +14,7 @@ import { makeStyles } from "@mui/styles";
 import { blue } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { handleAddUserAnswer } from "../../state/action-creator/users";
 
@@ -144,49 +144,68 @@ const Question = () => {
               ).toFixed(
                 1
               )}% - ${optionTwoVotes} out of ${totalVotes} votes`}</Typography>
+              <Button component={Link} to={`/`} sx={{ marginTop: "30px" }}>
+                Back
+              </Button>
             </CardContent>
           </Card>
         </>
       )}
       {!answerFound && (
         <>
-          <Typography
-            variant="h6"
-            color="textSecondary"
-            component="h2"
-            gutterBottom
+          <Card
+            className={classes.card}
+            elevation={1}
+            sx={{ marginTop: "20px" }}
           >
-            Would you rather...
-          </Typography>
-
-          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <FormControl sx={{ display: "block", marginBottom: "20px" }}>
-              <RadioGroup
-                value={selectedOption}
-                onChange={(e) => setSelectedOption(e.target.value)}
-              >
-                <FormControlLabel
-                  value="optionOne"
-                  control={<Radio />}
-                  label={optionOneText}
+            <CardHeader
+              avatar={
+                <Avatar
+                  alt={`Photo of ${questionUserName}`}
+                  src={questionUserImage}
                 />
-                <FormControlLabel
-                  value="optionTwo"
-                  control={<Radio />}
-                  label={optionTwoText}
-                />
-              </RadioGroup>
-            </FormControl>
+              }
+              title={
+                <Typography variant="h6" sx={{ color: "#808080" }}>
+                  {questionUserName} asks, Would you rather...
+                </Typography>
+              }
+            />
+            <CardContent sx={{ textAlign: "center", padding: "20px" }}>
+              <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <FormControl sx={{ display: "block", marginBottom: "20px" }}>
+                  <RadioGroup
+                    value={selectedOption}
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                  >
+                    <FormControlLabel
+                      value="optionOne"
+                      control={<Radio />}
+                      label={optionOneText}
+                    />
+                    <FormControlLabel
+                      value="optionTwo"
+                      control={<Radio />}
+                      label={optionTwoText}
+                    />
+                  </RadioGroup>
+                </FormControl>
 
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              endIcon={<ArrowForwardIosOutlinedIcon />}
-            >
-              Submit Your Answer
-            </Button>
-          </form>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  endIcon={<ArrowForwardIosOutlinedIcon />}
+                >
+                  Submit Your Answer
+                </Button>
+              </form>
+
+              <Button component={Link} to={`/`} sx={{ marginTop: "30px" }}>
+                Back
+              </Button>
+            </CardContent>
+          </Card>
         </>
       )}
     </Container>
