@@ -14,7 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
 import { blue } from "@mui/material/colors";
 import { handleSetAuthedUser } from "../../state/action-creator/authedUser";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 
@@ -82,12 +82,16 @@ const Layout = ({ children }) => {
         >
           <Toolbar>
             <Typography className={classes.date}>Today is the</Typography>
-            {authedUser && (
+            {authedUser ? (
               <>
                 <Typography>{userName}</Typography>
                 <Avatar className={classes.avatar} src={userAvatar} />
                 <Button onClick={handleLogout}>Logout</Button>
               </>
+            ) : (
+              <Button component={Link} to={`/login`}>
+                Login
+              </Button>
             )}
           </Toolbar>
         </AppBar>

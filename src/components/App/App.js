@@ -8,6 +8,7 @@ import QuestionNew from "../QuestionCards/QuestionNew";
 import LeaderBoard from "../LeaderBoard/LeaderBoard";
 import Question from "../QuestionCards/Question";
 import UserLogin from "../User/UserLogin";
+import ProtectedRoute from "../ProtectedRoute";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
@@ -22,11 +23,32 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Layout>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<UserLogin />} />
-          <Route path="/new" element={<QuestionNew />} />
           <Route path="/leader-board" element={<LeaderBoard />} />
-          <Route path="/question/:id" element={<Question />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/new"
+            element={
+              <ProtectedRoute>
+                <QuestionNew />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/question/:id"
+            element={
+              <ProtectedRoute>
+                <Question />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Layout>
     </ThemeProvider>
