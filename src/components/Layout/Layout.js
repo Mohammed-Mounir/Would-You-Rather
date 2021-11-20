@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    date: {
+    geetings: {
       flexGrow: 1,
     },
     toolbar: theme.mixins.toolbar,
@@ -81,7 +81,7 @@ const Layout = ({ children }) => {
           sx={{ background: "#f4f4f4", color: "#000000" }}
         >
           <Toolbar>
-            <Typography className={classes.date}>Today is the</Typography>
+            <Typography className={classes.geetings}>Welcome!</Typography>
             {authedUser ? (
               <>
                 <Typography>{userName}</Typography>
