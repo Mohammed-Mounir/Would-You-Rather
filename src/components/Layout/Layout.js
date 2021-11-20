@@ -124,9 +124,9 @@ const Layout = ({ children }) => {
 
                 <ListItem
                   button
-                  onClick={() => navigate("/new")}
+                  onClick={() => navigate("/add")}
                   className={
-                    location.pathname === "/new" ? classes.active : null
+                    location.pathname === "/add" ? classes.active : null
                   }
                 >
                   <ListItemIcon>
@@ -139,9 +139,9 @@ const Layout = ({ children }) => {
 
             <ListItem
               button
-              onClick={() => navigate("/leader-board")}
+              onClick={() => navigate("/leaderboard")}
               className={
-                location.pathname === "/leader-board" ? classes.active : null
+                location.pathname === "/leaderboard" ? classes.active : null
               }
             >
               <ListItemIcon>

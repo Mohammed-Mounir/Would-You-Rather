@@ -24,7 +24,7 @@ const App = () => {
       <Layout>
         <Routes>
           <Route path="/login" element={<UserLogin />} />
-          <Route path="/leader-board" element={<LeaderBoard />} />
+          <Route path="/leaderboard" element={<LeaderBoard />} />
           <Route
             path="/"
             element={
@@ -34,7 +34,7 @@ const App = () => {
             }
           />
           <Route
-            path="/new"
+            path="/add"
             element={
               <ProtectedRoute>
                 <QuestionNew />
