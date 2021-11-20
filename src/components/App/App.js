@@ -7,6 +7,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import QuestionNew from "../QuestionCards/QuestionNew";
 import LeaderBoard from "../LeaderBoard/LeaderBoard";
 import Question from "../QuestionCards/Question";
+import UserLogin from "../User/UserLogin";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
@@ -22,6 +23,7 @@ const App = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<UserLogin />} />
           <Route path="/new" element={<QuestionNew />} />
           <Route path="/leader-board" element={<LeaderBoard />} />
           <Route path="/question/:id" element={<Question />} />
