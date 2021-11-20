@@ -14,7 +14,7 @@ const CardText = styled("p")(({ theme }) => ({
 }));
 
 const UserScore = (props) => {
-  const { id, name, avatarURL, answers, questions } = props.user;
+  const { name, avatarURL, answers, questions } = props.user;
   const numOfAnswers = Object.keys(answers).length;
   const numOfQuestions = questions.length;
   const score = numOfAnswers + numOfQuestions;

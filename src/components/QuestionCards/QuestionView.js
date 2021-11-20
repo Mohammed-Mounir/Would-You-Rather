@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import { red, blue } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ const CardText = styled("p")(({ theme }) => ({
 const QuestionView = (props) => {
   const users = useSelector((state) => state.users);
 
-  const { id, author, timestamp, optionOne, optionTwo } = props.question;
+  const { id, author, optionOne, optionTwo } = props.question;
   const questionUserName = users[author]?.name;
   const questionUserImage = users[author]?.avatarURL;
 

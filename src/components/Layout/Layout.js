@@ -12,7 +12,6 @@ import ListItemText from "@mui/material/ListItemText";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
-import { blue } from "@mui/material/colors";
 import { handleSetAuthedUser } from "../../state/action-creator/authedUser";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
