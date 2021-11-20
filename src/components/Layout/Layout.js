@@ -13,8 +13,10 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
 import { blue } from "@mui/material/colors";
+import { handleSetAuthedUser } from "../../state/action-creator/authedUser";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -62,6 +64,12 @@ const Layout = ({ children }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    await dispatch(handleSetAuthedUser(null));
+    navigate("/login");
+  };
 
   return (
     <StyledEngineProvider injectFirst>
@@ -74,8 +82,13 @@ const Layout = ({ children }) => {
         >
           <Toolbar>
             <Typography className={classes.date}>Today is the</Typography>
-            <Typography>{userName}</Typography>
-            <Avatar className={classes.avatar} src={userAvatar} />
+            {authedUser && (
+              <>
+                <Typography>{userName}</Typography>
+                <Avatar className={classes.avatar} src={userAvatar} />
+                <Button onClick={handleLogout}>Logout</Button>
+              </>
+            )}
           </Toolbar>
         </AppBar>
 
@@ -92,27 +105,33 @@ const Layout = ({ children }) => {
           </div>
 
           <List>
-            <ListItem
-              button
-              onClick={() => navigate("/")}
-              className={location.pathname === "/" ? classes.active : null}
-            >
-              <ListItemIcon>
-                <HomeIcon color="primary" />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
+            {authedUser && (
+              <>
+                <ListItem
+                  button
+                  onClick={() => navigate("/")}
+                  className={location.pathname === "/" ? classes.active : null}
+                >
+                  <ListItemIcon>
+                    <HomeIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="Dashboard" />
+                </ListItem>
 
-            <ListItem
-              button
-              onClick={() => navigate("/new")}
-              className={location.pathname === "/new" ? classes.active : null}
-            >
-              <ListItemIcon>
-                <AddBoxIcon color="primary" />
-              </ListItemIcon>
-              <ListItemText primary="New Question" />
-            </ListItem>
+                <ListItem
+                  button
+                  onClick={() => navigate("/new")}
+                  className={
+                    location.pathname === "/new" ? classes.active : null
+                  }
+                >
+                  <ListItemIcon>
+                    <AddBoxIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="New Question" />
+                </ListItem>
+              </>
+            )}
 
             <ListItem
               button

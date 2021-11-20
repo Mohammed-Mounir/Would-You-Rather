@@ -11,14 +11,21 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import LoginIcon from "@mui/icons-material/Login";
 import LoginAvatar from "../../assets/images/Login-Avatar.png";
+import { handleSetAuthedUser } from "../../state/action-creator/authedUser";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 const UserLogin = () => {
+  const users = useSelector((state) => state.users);
+  console.log(users);
   const [selectedUser, setSelectedUser] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await dispatch(handleSetAuthedUser(selectedUser));
     navigate("/");
   };
 
@@ -51,9 +58,11 @@ const UserLogin = () => {
                 label="Select User"
                 onChange={(e) => setSelectedUser(e.target.value)}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {Object.entries(users).map(([key, user]) => (
+                  <MenuItem key={key} value={key}>
+                    {user.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <Button
