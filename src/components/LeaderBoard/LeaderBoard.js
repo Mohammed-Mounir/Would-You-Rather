@@ -6,11 +6,18 @@ import Grid from "@mui/material/Grid";
 const LeaderBoard = () => {
   const users = useSelector((state) => state.users);
 
+  const sortedUsersArr = Object.entries(users)
+    .map(([_, user]) => {
+      const score = Object.keys(user.answers).length + user.questions.length;
+      return { ...user, score };
+    })
+    .sort((a, b) => b.score - a.score);
+
   return (
     <Container>
       <Grid container spacing={3}>
-        {Object.entries(users).map(([key, user]) => (
-          <Grid item xs={12} md={6} lg={4} key={key}>
+        {sortedUsersArr.map((user) => (
+          <Grid item xs={12} md={6} lg={4} key={user.id}>
             <UserScore user={user} />
           </Grid>
         ))}
