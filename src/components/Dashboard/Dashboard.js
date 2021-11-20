@@ -16,20 +16,24 @@ const Dashboard = () => {
 
   const unAnsweredQuestions =
     currentUserAnswered &&
-    Object.entries(questions).filter(
-      ([_, { id: questionID }]) =>
-        !Object.keys(currentUserAnswered).some(
-          (answeredQuestionID) => answeredQuestionID === questionID
-        )
-    );
+    Object.entries(questions)
+      .filter(
+        ([_, { id: questionID }]) =>
+          !Object.keys(currentUserAnswered).some(
+            (answeredQuestionID) => answeredQuestionID === questionID
+          )
+      )
+      .sort((a, b) => b[1].timestamp - a[1].timestamp);
 
   const answeredQuestions =
     currentUserAnswered &&
-    Object.entries(questions).filter(([_, { id: questionID }]) =>
-      Object.keys(currentUserAnswered).some(
-        (answeredQuestionID) => answeredQuestionID === questionID
+    Object.entries(questions)
+      .filter(([_, { id: questionID }]) =>
+        Object.keys(currentUserAnswered).some(
+          (answeredQuestionID) => answeredQuestionID === questionID
+        )
       )
-    );
+      .sort((a, b) => b[1].timestamp - a[1].timestamp);
 
   const handleChange = (evt, newValue) => {
     setSelectedTab(newValue);
