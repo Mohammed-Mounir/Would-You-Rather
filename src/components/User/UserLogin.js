@@ -18,7 +18,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 const UserLogin = () => {
   const users = useSelector((state) => state.users);
-  console.log(users);
   const [selectedUser, setSelectedUser] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
