@@ -12,12 +12,14 @@ import Select from "@mui/material/Select";
 import LoginIcon from "@mui/icons-material/Login";
 import LoginAvatar from "../../assets/images/Login-Avatar.png";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const UserLogin = () => {
   const [selectedUser, setSelectedUser] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate("/");
   };
 
   return (
